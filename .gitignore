@@ -48,6 +48,14 @@ override.tf
 override.tf.json
 *.auto.tfvars
 terraform.tfvars
+*.zip
+# Terragrunt cache
+**/.terragrunt-cache/
+
+# IDEs
+.vscode/
+.idea/
+EOF
 
 # === GITHUB ACTIONS ===
 .github/workflows/*.log
