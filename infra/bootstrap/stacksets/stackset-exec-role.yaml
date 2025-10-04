@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: StackSets execution role in member accounts trusted by the management account's admin role.
+
+Parameters:
+  ManagementAccountId:
+    Type: String
+    Description: The management (payer) account ID 
+
+Resources:
+  StackSetExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: AWSCloudFormationStackSetExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub arn:aws:iam::${ManagementAccountId}:role/AWSCloudFormationStackSetAdministrationRole
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        # Keep it simple for bootstrap; tighten later if you prefer least-privilege
+        - arn:aws:iam::aws:policy/AdministratorAccess

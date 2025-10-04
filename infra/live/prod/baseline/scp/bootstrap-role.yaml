@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create or repair a bootstrap admin role trusted by the management account.
+Parameters:
+  ManagementAccountId:
+    Type: String
+Resources:
+  OrgAdminBootstrap:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: OrgAdminBootstrap
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub "arn:aws:iam::${ManagementAccountId}:root"
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess

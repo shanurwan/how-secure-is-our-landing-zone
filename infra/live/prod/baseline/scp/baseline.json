@@ -7,19 +7,33 @@
       "Action": "*",
       "Resource": "*",
       "Condition": {
-        "StringLike": { "aws:PrincipalArn": "arn:aws:iam::*:root" }
+        "StringEquals": {
+          "aws:PrincipalArn": "arn:aws:iam::*:root"
+        }
       }
     },
     {
       "Sid": "DenyUnsupportedRegions",
       "Effect": "Deny",
-      "Action": "*",
+      "NotAction": [
+        "iam:*",
+        "organizations:*",
+        "account:*",
+        "sso:*",
+        "sso-directory:*",
+        "sso-admin:*",
+        "sts:*",
+        "cloudtrail:*",
+        "support:*",
+        "budgets:*",
+        "tag:*"
+      ],
       "Resource": "*",
       "Condition": {
+        "Null": { "aws:RequestedRegion": "false" },
         "StringNotEqualsIfExists": {
-          "aws:RequestedRegion": ["ap-southeast-5"]
-        },
-        "Null": { "aws:RequestedRegion": "false" }
+          "aws:RequestedRegion": [ "ap-southeast-5" ]
+        }
       }
     }
   ]
