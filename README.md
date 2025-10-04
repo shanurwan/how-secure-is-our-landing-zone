@@ -9,7 +9,7 @@ landing zone is the multi account architecture solution. Using landing zone you 
 - Security Governance 
 - Identity Mangement
 - Flexibility
-- Business Compliance
+- Business Complianyesce
 
 ## AWS Landing Zone and Best Practice 
 
