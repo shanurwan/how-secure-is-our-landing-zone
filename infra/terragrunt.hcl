@@ -1,8 +1,19 @@
 locals {
-  aws_region    = "ap-southeast-5"
+  aws_region    = "us-east-1"
   enable_config = false
   enable_gd     = false
   enable_trail  = true
+}
+
+# Ensure Terraform sees a backend block everywhere
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<EOF
+terraform {
+  backend "local" {}
+}
+EOF
 }
 
 remote_state {
@@ -17,14 +28,4 @@ inputs = {
   enable_config = local.enable_config
   enable_gd     = local.enable_gd
   enable_trail  = local.enable_trail
-}
-
-generate "backend" {
-  path      = "backend.tf"
-  if_exists = "overwrite_terragrunt"
-  contents  = <<EOF
-terraform {
-  backend "local" {}
-}
-EOF
 }
