@@ -1,5 +1,5 @@
 locals {
-  aws_region    = "us-east-1"
+  aws_region    = "ap-southeast-5"
   enable_config = false
   enable_gd     = false
   enable_trail  = true
