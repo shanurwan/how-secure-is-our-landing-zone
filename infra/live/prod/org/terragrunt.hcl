@@ -1,8 +1,20 @@
 include "root" {
-  path = find_in_parent_folders()
+  path = "../../../terragrunt.hcl" # include root directly
+}
+
+locals {
+  environment = "prod"
 }
 
 terraform {
-  # Temporary placeholder module
-  source = "tfr://registry.terraform.io/hashicorp/null//"
+  source = "../../../modules/org"
+}
+
+inputs = {
+  ou_names = ["Security", "Sandbox", "Dev", "Stage", "Prod"]
+  accounts = [
+    { name = "log-archive", email = "aws+log-archive-20251004@example.com", ou = "Security" },
+    { name = "security", email = "aws+security@example.com", ou = "Security" },
+    { name = "shared-svc", email = "aws+shared@example.com", ou = "Prod" }
+  ]
 }
